@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marketika</title>
+    <style>
+        * {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            -webkit-user-select: none;
+            /* Safari */
+            -ms-user-select: none;
+            /* IE 10 and IE 11 */
+            user-select: none;
+            /* Standard syntax */
+            min-height: 100vh;
+            min-width: 100vw;
+            overflow-x: hidden;
+        }
+
+        body::-webkit-scrollbar {
+            width: 0;
+        }
+
+        .main-container {
+            height: 100000px;
+            width: 100vw;
+            position: absolute;
+            left: 0;
+            top: 0;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+            background-color: #fff;
+        }
+
+        .main-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        .videos {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            object-fit: cover;
+            z-index: 1;
+            opacity: 1;
+            /* transition: 1s; */
+        }
+
+        .videosRev {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            object-fit: cover;
+            z-index: 1;
+            opacity: 0;
+            /* transition: 1s; */
+        }
+
+        #videoCover {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            object-fit: cover;
+            z-index: 2;
+            opacity: 0;
+            background-color: #fff;
+            transition: 1s;
+        }
+
+        .next-section,
+        .architectureBtn,
+        .sustainabilityBtn,
+        .greenBtn,
+        .communalBtn,
+        .locationBtn {
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="main-container">
+
+        <div id="video-background">
+            <video id="video01" class="videos" preload='auto' muted playsinline>
+                <source type='video/mp4;codecs="avc1.42E01E, mp4a.40.2"'>
+            </video>
+            <video id="videoRev11" class="videosRev" preload='auto' muted playsinline>
+                <source type='video/mp4;codecs="avc1.42E01E, mp4a.40.2"'>
+            </video>
+            <div id="videoCover"></div>
+        </div>
+
+    </div>
+    <script>
+
+        //set border radius for white backgrouns
+        if (screen.width < 481) {
+            for (let i = 0; i < document.getElementsByClassName("white-background").length; i++) {
+                document.getElementsByClassName("white-background")[i].children[0].style.borderRadius = "12px"
+            }
+        }
+
+        window.onbeforeunload = function () {
+            window.scrollTo(0, 50000);
+        };
+
+        //VIDEO
+        let videos = document.getElementsByClassName("videos");
+        let videosRev = document.getElementsByClassName("videosRev");
+        videos[0].src = "https://raw.githubusercontent.com/quincecreative/marketika/gh-pages/Marketika5.mp4";
+        // videos[0].src = "https://raw.githubusercontent.com/veljko85/theVertical/gh-pages/videos/Desctop.mp4";
+        // videos[0].src = "Marketika2.mp4"
+        videosRev[0].src = "https://raw.githubusercontent.com/quincecreative/marketika/gh-pages/Marketika5Reverse.mp4";
+        // videosRev[0].src = "https://raw.githubusercontent.com/veljko85/theVertical/gh-pages/videos/Desctop Nazad.mp4";
+
+
+        // videosRev[0].src = "MarketikaReverse2Online.mp4";
+        // videos[0].src = "Desctop.mp4";
+        // videosRev[0].src = "Desctop Nazad.mp4";
+
+        // var req = new XMLHttpRequest();
+        // req.open('GET', 'https://raw.githubusercontent.com/veljko85/theVertical/gh-pages/videos/Desctop.mp4', true);
+        // req.responseType = 'blob';
+
+        // req.onload = function () {
+        //     // Onload is triggered even on 404
+        //     // so we need to check the status code
+        //     if (this.status === 200) {
+        //         var videoBlob = this.response;
+        //        var vid = URL.createObjectURL(videoBlob); // IE10+
+        //         // Video is now downloaded
+        //         // and we can set it as source on the video element
+        //         videos[0].src = vid;
+        //         videos[0].play();
+        //         console.log("loaded")
+        //     }
+        // }
+        // req.onerror = function () {
+        //     // Error
+        // }
+
+        // req.send(); 
+
+
+        videos[0].play();
+        let startInterval = setInterval(() => {
+            if (videos[0].currentTime > 0) {
+                clearInterval(startInterval);
+                videos[0].pause();
+                videosRev[0].currentTime = 0
+                // displaySection(0)
+                // startFadeInUp(document.getElementsByClassName("main-page-title")[0], 1000)
+                // startFadeInUp(document.getElementsByClassName("next-section-ani")[0], 1200)
+                // startFadeInUp(document.getElementsByClassName("next-section-ani-arrow")[0], 1200)
+            }
+        }, 100);
+
+        // videosRev[0].play();
+        setTimeout(() => {
+            videosRev[0].pause();
+        }, 500);
+
+
+        // let intervalPlay2 = setInterval(() => {
+
+        //     // videos[0].play();
+
+        //     scrollSection = 2;
+        //     if (videos[0].currentTime > 5 && videos[0].currentTime < 6) {
+        //         clearInterval(intervalPlay2);
+        //         videos[0].pause();
+        //         videosRev[0].pause();
+        //         setTimeout(() => {
+        //             triger = false;
+        //         }, 100);
+        //     }
+
+        // }, 100);
+
+        function scrollVideo(nextScrollSec, from, to, sectCurTime) {
+            //console.log(nextScrollSec, from, to, sectCurTime)
+            videosRev[0].style.opacity = 0;
+            videos[0].play();
+            triger = true;
+            scrollSection = nextScrollSec;
+            setTimeout(() => {
+                videosRev[0].currentTime = sectCurTime;
+            }, 500);
+            // let displayedSection = false;
+            let intervalPlaySrollA = setInterval(() => {
+                //console.log(videos[0].currentTime)
+                // if (screen.width > 480) {
+                //     if ((videos[0].currentTime > (from - 1)) && scrollSection < 7) {
+                //         if (!displayedSection) displaySection(nextScrollSec - 1)
+                //         displayedSection = true;
+                //     }
+                // }
+                if (videos[0].currentTime > from && videos[0].currentTime < to) {
+                    clearInterval(intervalPlaySrollA);
+                    videos[0].pause();
+                    // if (scrollSection < 7) {
+                    //     setTimeout(() => {
+                    //         if (!displayedSection) displaySection(nextScrollSec - 1)
+                    //         displayedSection = true;
+                    //     }, 500)
+                    // }
+                    if (scrollSection === 7) {
+                        scrollSection = 1
+                        videos[0].currentTime = 0
+                        // displaySection(0)
+                        //console.log("new")
+                    }
+                    setTimeout(() => {
+                        triger = false;
+                        videos[0].playbackRate = 1;
+                    }, 100);
+                }
+            }, 100);
+        }
+        function scrollVideoRev(nextScrollSec, from, to, sectCurTime) {
+            videosRev[0].style.opacity = 1;
+            videosRev[0].play();
+            triger = true;
+            scrollSection = nextScrollSec;
+            setTimeout(() => {
+                videos[0].currentTime = sectCurTime;
+            }, 500);
+            // let displayedSection = false;
+            let intervalPlaySrollR = setInterval(() => {
+                // if (screen.width > 480) {
+                //     if (videosRev[0].currentTime > (from - 1)) {
+                //         if (!displayedSection) displaySection(nextScrollSec - 1)
+                //         displayedSection = true;
+                //     }
+                // }
+                if (videosRev[0].currentTime > from && videosRev[0].currentTime < to) {
+                    clearInterval(intervalPlaySrollR);
+                    videosRev[0].pause();
+                    // setTimeout(() => {
+                    //     if (!displayedSection) displaySection(nextScrollSec - 1)
+                    //     displayedSection = true;
+                    // }, 500)
+                    // videos[0].style.opacity = 0;
+                    setTimeout(() => {
+                        triger = false;
+                        videosRev[0].playbackRate = 1;
+                    }, 100);
+                }
+            }, 100);
+        }
+
+        let triger = false;
+
+        //FUNCTION VIDEO FORVARD
+        function videoForvard() {
+            //console.log(scrollSection, triger)
+            ///////////////   1
+            if (scrollSection == 1 && !triger) {
+                // scrollVideo(2, 4.3, 5.3, 21.9);
+                scrollVideo(2, 4, 4.3, 19.1);
+                // undisplaySection(0)
+            }
+            ///////////////   2
+            if (scrollSection == 2 && !triger) {
+                // scrollVideo(3, 8.8, 9.8, 17.5);
+                scrollVideo(3, 7.8, 8.1, 15.5);
+                // undisplaySection(1)
+            }
+            ///////////////   3
+            if (scrollSection == 3 && !triger) {
+                // scrollVideo(4, 13.2, 14.2, 13.1);
+                scrollVideo(4, 11.7, 12, 11.5);
+                // undisplaySection(2)
+            }
+            ///////////// 4
+            if (scrollSection == 4 && !triger) {
+                // scrollVideo(5, 17.3, 18.3, 9.7);
+                scrollVideo(5, 15.4, 15.7, 7.6);
+                // undisplaySection(3)
+            }
+            //////////   5
+            if (scrollSection == 5 && !triger) {
+                // scrollVideo(6, 21.9, 22.9, 4.3);
+                scrollVideo(6, 19.2, 19.5, 4.3);
+                // undisplaySection(4)
+            }
+            ////////// 6
+            if (scrollSection == 6 && !triger) {
+                // scrollVideo(7, 26, 26.7, 0);
+                scrollVideo(7, 23.1, 23.2, 0);
+                // undisplaySection(5)
+
+            }
+        }
+        //FUNCTION VIDEO REVERSE
+        function videoReverse() {
+            //////////  1
+            if (scrollSection == 2 && !triger) {
+                // scrollVideoRev(1, 26, 26.7, 0);
+                scrollVideoRev(1, 23.1, 23.4, 0);
+                // undisplaySection(1)
+            }
+            //////////  2
+            if (scrollSection == 3 && !triger) {
+                // scrollVideoRev(2, 21.9, 22.9, 4.3);
+                scrollVideoRev(2, 19.1, 19.4, 4.1);
+                // undisplaySection(2)
+            }
+            //////// 3
+            if (scrollSection == 4 && !triger) {
+                // scrollVideoRev(3, 17.5, 18.5, 8.8);
+                scrollVideoRev(3, 15.5, 15.8, 7.8);
+                // undisplaySection(3)
+            }
+            //////// 4
+            if (scrollSection == 5 && !triger) {
+                // scrollVideoRev(4, 13.1, 14.1, 13.2);
+                scrollVideoRev(4, 11.5, 11.8, 11.7);
+                // undisplaySection(4)
+            }
+            ///////  5
+            if (scrollSection == 6 && !triger) {
+                // scrollVideoRev(5, 8.7, 9.7, 17.3);
+                scrollVideoRev(5, 7.6, 7.9, 15.4);
+                // undisplaySection(5)
+            }
+            // // ///////  6
+            // if (scrollSection == 7 && !triger) {
+            //     scrollVideoRev(6, 4.3, 5.3, 21.9);
+            // }
+        }
+
+
+
+
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        //SCROLL EVENT
+        let scrollSection = 1;
+        var lastScrollTop = 50000;
+        setTimeout(() => {
+            document.addEventListener("scroll", () => {
+                // if (!hamOpened && !popUpOpen && !wellBeingPageOpen) {
+
+                var st = window.pageYOffset || document.documentElement.scrollTop; // Credits: "https://github.com/qeremy/so/blob/master/so.dom.js#L426"
+                //console.log("scroll", st, lastScrollTop)
+                if (st > lastScrollTop) {
+
+                    videoForvard();
+                } else {
+                    videoReverse();
+                }
+                lastScrollTop = st <= 0 ? 0 : st; // For Mobile or negative scrolling
+                // }
+            });
+        }, 500);
+
+        // //NEXT SECTIONS
+        // let nextSectionButtons = document.getElementsByClassName("next-section");
+
+        // for (let i = 0; i < nextSectionButtons.length; i++) {
+        //     // nextSectionButtons[i].style.cursor = "pointer"
+        //     nextSectionButtons[i].addEventListener("click", (event) => { videoForvard(); })
+        // }
+
+        // //SECTION BUTTONS
+        // let architectureButtons = document.getElementsByClassName("architectureBtn");
+
+        // for (let i = 0; i < architectureButtons.length; i++) {
+        //     // architectureButtons[i].style.backgroundColor = "#ff0000"
+        //     architectureButtons[i].addEventListener("click", (event) => {
+        //         //console.log("architectureButtons")
+        //         scrollToRandomSection(0, 2, 4, 4.3, 19.1, 2, 19.1, 19.4, 4.1)
+        //     })
+        // }
+
+        // let sustainabilityButtons = document.getElementsByClassName("sustainabilityBtn");
+
+        // for (let i = 0; i < sustainabilityButtons.length; i++) {
+        //     // sustainabilityButtons[i].style.backgroundColor = "#fff000"
+        //     sustainabilityButtons[i].addEventListener("click", (event) => {
+        //         //console.log("sustainabilityButtons")
+        //         scrollToRandomSection(4.3, 3, 7.8, 8.1, 15.5, 3, 15.5, 15.8, 7.8)
+        //     })
+        // }
+
+        // let greenButtons = document.getElementsByClassName("greenBtn");
+
+        // for (let i = 0; i < greenButtons.length; i++) {
+        //     // greenButtons[i].style.backgroundColor = "#ffff00"
+        //     greenButtons[i].addEventListener("click", (event) => {
+        //         //console.log("greenButtons")
+        //         scrollToRandomSection(8.8, 4, 11.7, 12, 11.5, 4, 11.5, 11.8, 11.7)
+        //     })
+        // }
+
+        // let communalButtons = document.getElementsByClassName("communalBtn");
+
+        // for (let i = 0; i < communalButtons.length; i++) {
+        //     // communalButtons[i].style.backgroundColor = "#ff00ff"
+        //     communalButtons[i].addEventListener("click", (event) => {
+        //         //console.log("communalButtons")
+        //         scrollToRandomSection(13.2, 5, 15.4, 15.7, 7.6, 5, 7.6, 7.9, 15.4)
+        //     })
+        // }
+
+        // let locationButtons = document.getElementsByClassName("locationBtn");
+
+        // for (let i = 0; i < locationButtons.length; i++) {
+        //     // locationButtons[i].style.backgroundColor = "#ff000f"
+        //     locationButtons[i].addEventListener("click", (event) => {
+        //         // console.log("locationButtons")
+        //         scrollToRandomSection(17.3, 6, 19.2, 19.5, 4.3)
+        //     })
+        // }
+
+
+        // //TILDA ZERO BLOCKS
+        // let blocks = ["rec735462687", "rec735462689", "rec735462691", "rec735462693", "rec735462695", "rec735462697"]
+
+        // for (let i = 0; i < blocks.length; i++) {
+        //     // document.getElementsByClassName("main-container")[0].appendChild(document.getElementById(blocks[i]))
+        //     // document.getElementById(blocks[i]).style.display = "none"
+        //     document.getElementById(blocks[i]).style.position = "fixed"
+        //     document.getElementById(blocks[i]).style.top = "0vh"
+        //     document.getElementById(blocks[i]).style.left = "0vw"
+        //     document.getElementById(blocks[i]).style.zIndex = "0"
+        //     document.getElementById(blocks[i]).style.opacity = "0"
+        //     document.getElementById(blocks[i]).style.transition = "0.5s"
+        // }
+
+        // //FUNCTIONS TO SCROLL THRUE BLOCKS
+        // function displaySection(i) {
+        //     // document.getElementById(blocks[i]).style.display = "block"
+        //     document.getElementById(blocks[i]).style.zIndex = "100"
+        //     setTimeout(() => {
+        //         document.getElementById(blocks[i]).style.opacity = "1"
+        //         // document.getElementById(blocks[i]).style.top = "0"
+        //     }, 100);
+        //     if (i != 0) {
+        //         animateFadeInUp(document.getElementsByClassName("quatro-logo")[i - 1], 100)
+        //         animateFadeInUp(document.getElementsByClassName("ham-but")[i - 1], 100)
+        //         animateFadeInUp(document.getElementsByClassName("reach-out-but")[i - 1], 100)
+        //         animateFadeInUp(document.getElementsByClassName("fr-but")[i - 1], 100)
+        //         animateFadeInUp(document.getElementsByClassName("section-num")[i - 1], 100)
+        //         animateFadeInUp(document.getElementsByClassName("section-num-shape")[i - 1], 100)
+        //         animateFadeInUp(document.getElementsByClassName("section-num-of")[i - 1], 100)
+        //         animateFadeInUp(document.getElementsByClassName("section-title")[i - 1], 100)
+
+        //         animateFadeInUp(document.getElementsByClassName("section-text")[i - 1], 300)
+
+        //         animateFadeInUp(document.getElementsByClassName("section-continue")[i - 1], 500)
+        //         animateFadeInUp(document.getElementsByClassName("section-continue-arrow")[i - 1], 500)
+
+        //         animateFadeInUp(document.getElementsByClassName("section-side-line")[i - 1], 700)
+        //         animateFadeInUp(document.getElementsByClassName("section-side-line-small")[i - 1], 700)
+        //         animateFadeInUp(document.getElementsByClassName("architecture-text")[i - 1], 700)
+        //         animateFadeInUp(document.getElementsByClassName("sustainability-text")[i - 1], 700)
+        //         animateFadeInUp(document.getElementsByClassName("green-text")[i - 1], 700)
+        //         animateFadeInUp(document.getElementsByClassName("communal-text")[i - 1], 700)
+        //         animateFadeInUp(document.getElementsByClassName("location-text")[i - 1], 700)
+        //     }
+        // }
+        // function undisplaySection(i) {
+        //     // setTimeout(() => {
+        //     //     document.getElementById(blocks[i]).style.display = "none"
+        //     // }, 1100);
+        //     // document.getElementById(blocks[i]).style.top = "-200vh"
+        //     document.getElementById(blocks[i]).style.zIndex = "0"
+        //     document.getElementById(blocks[i]).style.opacity = "0"
+        // }
+        // function scrollToRandomSection(videoCurTime, nextScrollSec, from, to, sectCurTime, nextScrollSecRev, fromRev, toRev, sectCurTimeRev) {
+        //     undisplaySection(scrollSection - 1)
+        //     // console.log(nextScrollSec - scrollSection)
+        //     if ((nextScrollSec - scrollSection) > 0) {
+        //         if ((nextScrollSec - scrollSection) != 1) videos[0].playbackRate = 2;
+        //         scrollVideo(nextScrollSec, from, to, sectCurTime);
+        //     }
+        //     if ((nextScrollSec - scrollSection) < 0) {
+        //         if ((nextScrollSec - scrollSection) != -1) videosRev[0].playbackRate = 2;
+        //         scrollVideoRev(nextScrollSecRev, fromRev, toRev, sectCurTimeRev);
+        //     }
+        // }
+        // //FUNCTION TO GO TO RANDOM SECTION
+        // // function scrollToRandomSection(videoCurTime, nextScrollSec, from, to, sectCurTime) {
+        // // console.log(nextScrollSec - scrollSection)
+        // // setTimeout(() => {
+        // //     videoCoverActivate()
+        // // }, 500);
+        // // setTimeout(() => {
+        // //     videos[0].currentTime = videoCurTime;
+        // // }, 1600);
+        // // setTimeout(() => {
+        // //     scrollVideo(nextScrollSec, from, to, sectCurTime);
+        // // }, 2500);
+        // // // setTimeout(() => {
+        // // for (let j = 0; j < blocks.length; j++) {
+        // //     undisplaySection(j)
+        // // }
+        // // // }, 1000);
+        // // }
+        // //FUNCTION TO ACTIVATE WHITE COVER
+        // function videoCoverActivate() {
+        //     videoCover.style.opacity = "1";
+        //     setTimeout(() => {
+        //         videoCover.style.opacity = "0";
+        //     }, 2100);
+        // }
+
+
+        // function startFadeInUp(element, delay) {
+
+        //     element.style.transition = "0s"
+
+        //     element.style.opacity = "0"
+
+        //     let finishPos = element.getBoundingClientRect().top
+        //     let startPos = element.getBoundingClientRect().top + 30
+
+        //     setTimeout(() => {
+        //         element.style.top = startPos + "px"
+        //     }, 500);
+
+        //     setTimeout(() => {
+        //         element.style.top = finishPos + "px"
+        //         element.style.transition = "1s"
+        //         element.style.opacity = "1"
+        //     }, delay);
+        // }
+
+        // function animateFadeInUp(element, delay) {
+
+        //     element.style.transition = "0s"
+
+        //     element.style.opacity = "0"
+        //     let finishPos = element.getBoundingClientRect().top
+        //     let startPos = element.getBoundingClientRect().top + 30
+
+        //     element.style.top = startPos + "px"
+
+        //     setTimeout(() => {
+        //         element.style.transition = "1s"
+        //         element.style.top = finishPos + "px"
+        //         element.style.opacity = "1"
+        //     }, delay);
+        // }
+
+
+
+        // //console.log(document.getElementById("rec725495524"))//footer section
+        // // document.getElementById("rec725495524").style.display = "none"
+        // // document.getElementById("rec725495524").style.backgroundColor = "#ff0000"
+
+        // //next section html 83 20
+
+        // // architectureBtn 786 -114 //html 80 20
+        // // sustainabilityBtn 786 -93 //html 180 20
+        // // greenBtn 786 -72 //html 85 20
+        // // communalBtn 786 -51 //html 110 20
+        // // locationBtn 786 -30 //html 55 20
+
+        // // 772 414
+
+
+        // // 21 razlika
+
+    </script>
+
+</body>
+
+</html>
